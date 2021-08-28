@@ -1,24 +1,15 @@
-import {Component, EventEmitter, OnInit, Output} from '@angular/core';
-import {HttpClient} from '@angular/common/http';
-import {catchError, map} from 'rxjs/operators';
-import {Observable, of} from 'rxjs';
+import {Component, EventEmitter, Inject, OnInit, Output} from '@angular/core';
+import {MAPS_API_LOADED} from '../load-maps-api/load-maps-api.module';
 
 @Component({
   selector: 'app-map',
-  templateUrl: './map.component.html',
-  styleUrls: ['./map.component.scss']
+  templateUrl: 'map.component.html'
 })
 export class MapComponent implements OnInit {
 
   @Output() public closeMap = new EventEmitter();
-  apiLoaded: Observable<boolean>;
 
-  constructor(private httpClient: HttpClient) {
-    this.apiLoaded = httpClient.jsonp('https://maps.googleapis.com/maps/api/js', 'callback')
-      .pipe(
-        map(() => true),
-        catchError(() => of(false)),
-      );
+  constructor(@Inject(MAPS_API_LOADED) public apiLoaded) {
   }
 
   ngOnInit(): void {
