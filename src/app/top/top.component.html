@@ -1,0 +1,2 @@
+<button *ngIf="!showMap" (click)="onClick()">Show Map</button>
+<app-map *ngIf="showMap" (closeMap)="onClose()"></app-map>
